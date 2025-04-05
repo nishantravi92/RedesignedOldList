@@ -1,0 +1,87 @@
+package com.insomniacapps.theoldlist.settings.ui
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.insomniacapps.theoldlist.data.WallpaperUiData
+
+@Composable
+fun WallpaperSettingsUi(wallpaperUiData: WallpaperUiData, modifier: Modifier) {
+        Column(
+            modifier = modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+        ) {
+            Text(
+                modifier = modifier.padding(start = 16.dp, top = 16.dp),
+                text = wallpaperUiData.title,
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.headlineMedium
+            )
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp)
+            ) {
+                items(wallpaperUiData.wallpapers) { wallpaper ->
+                    val width = (260 * 9 / 16).dp
+                    Column(Modifier.width(width)) {
+                        Image(
+                            painter = painterResource(id = wallpaper.wallpaperResId),
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .height(260.dp)
+                                .aspectRatio(9 / 16f)
+                                .clip(RoundedCornerShape(4.dp))
+                                .clickable {
+                                    wallpaper.wallpaperSettingsUiAction.onWallpaperChanged(
+                                        wallpaper.wallpaperId
+                                    )
+                                },
+                            contentDescription = "Wallpaper"
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Checkbox(
+                                checked = wallpaper.isCurrentlySelected,
+                                onCheckedChange = {
+                                    wallpaper.wallpaperSettingsUiAction.onWallpaperChanged(
+                                        wallpaper.wallpaperId
+                                    )
+                                },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = MaterialTheme.colorScheme.primary,
+                                    checkmarkColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+            HorizontalDivider(modifier = Modifier.fillMaxWidth())
+        }
+}

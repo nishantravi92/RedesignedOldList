@@ -1,25 +1,34 @@
 package com.insomniacapps.theoldlist.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.insomniacapps.theoldlist.data.TaskUiData
 import com.insomniacapps.theoldlist.data.TaskUiModelAction
-import com.insomniacapps.theoldlist.ui.theme.TaskUi
 import com.insomniacapps.theoldlist.ui.theme.TheOldListTheme
+import com.insomniacapps.theoldlist.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController) {
-    TheOldListTheme {
+fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = viewModel()) {
+    TheOldListTheme(homeViewModel.wallpaperResState) {
         Scaffold(modifier = Modifier.fillMaxSize(),
-            topBar = { TopAppBar(title = { Text("The Old list") }) }) { innerPadding ->
+            containerColor = Color.Transparent,
+            topBar = { TopAppBar(title = { Text("The Old list") },
+                actions = { IconActions(navController) }) }) { innerPadding ->
             TaskUi(
                 taskUiData = TaskUiData(
                     title = "My task",
@@ -42,4 +51,9 @@ fun MainScreen(navController: NavController) {
             )
         }
     }
+}
+
+@Composable
+private fun IconActions(navController: NavController) {
+    Icon(imageVector = Icons.Rounded.Settings, contentDescription = "Settings", modifier = Modifier.padding(end = 16.dp).clickable { navController.navigate(route = "settings") })
 }
