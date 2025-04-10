@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.insomniacapps.theoldlist.settings.ui.WallpaperSettingsUi
 import com.insomniacapps.theoldlist.ui.HomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                     HomeScreen(navController)
                 }
                 composable("settings") {
-                    //WallpaperSettingsUi(navController)
+                    WallpaperSettingsUi(navController = navController)
                 }
             }
         }

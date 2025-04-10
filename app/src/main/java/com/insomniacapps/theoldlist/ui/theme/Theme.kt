@@ -13,10 +13,12 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.content.res.ResourcesCompat
 import com.insomniacapps.theoldlist.R
 import kotlinx.coroutines.flow.StateFlow
 
@@ -65,13 +67,17 @@ fun TheOldListTheme(
         typography = Typography,
     ) {
         Box {
-            val image = painterResource(id = wallpaperResState.collectAsState().value)
-            Image(
-                painter = image,
-                contentScale = ContentScale.Crop,
-                contentDescription = "Background image",
-                modifier = Modifier.fillMaxSize()
-            )
+            val wallpaperResourceId by  wallpaperResState.collectAsState()
+            if (wallpaperResourceId != ResourcesCompat.ID_NULL) {
+                val image = painterResource(id = wallpaperResourceId)
+                Image(
+                    painter = image,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Background image",
+                    modifier = Modifier.fillMaxSize()
+                )
+
+            }
             content()
         }
     }

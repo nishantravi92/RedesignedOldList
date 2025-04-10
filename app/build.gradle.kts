@@ -83,6 +83,9 @@ dependencies {
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    // Dagger hilt integration
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
     // Views/Fragments integration
     implementation("androidx.navigation:navigation-fragment:$nav_version")
     implementation("androidx.navigation:navigation-ui:$nav_version")

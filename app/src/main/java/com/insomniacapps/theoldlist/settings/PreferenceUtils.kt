@@ -1,40 +1,41 @@
 package com.insomniacapps.theoldlist.settings
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.DrawableRes
+import androidx.core.content.res.ResourcesCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /** A utils for shared preferences. */
-class PreferenceUtils @Inject constructor(activity: Activity) {
+@Singleton
+class PreferenceUtils @Inject constructor(@ApplicationContext context: Context) {
 
-    private val sharedPreferences: SharedPreferences = activity.getPreferences(Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(SHARED_PREFERNCE_FILE, 0)
+    val currentlySetWallpaper = MutableStateFlow(ResourcesCompat.ID_NULL)
 
-    val currentlySetWallpaperId: Int
-        get() =
-            sharedPreferences.getInt(
+    init {
+        MainScope().launch {
+            currentlySetWallpaper.value = sharedPreferences.getInt(
                 CURRENTLY_SET_WALLPAPER_KEY,
-                WallpaperData.defaultWallpaperId
+                WallpaperData.defaultWallpaperResId
             )
+        }
+    }
 
-    val currentlySetWallpaper: Int
-        get() =
-            WallpaperData.getWallPaperDrawableResId(
-                sharedPreferences.getInt(
-                    CURRENTLY_SET_WALLPAPER_KEY,
-                    WallpaperData.defaultWallpaperId
-                )
-            )
-
-
-    fun setWallpaper(wallpaperId: Int) {
-        with(sharedPreferences.edit()) {
-            putInt(CURRENTLY_SET_WALLPAPER_KEY, wallpaperId)
-            apply()
+    fun updateCurrentWallPaper(@DrawableRes id: Int) {
+        MainScope().launch {
+            currentlySetWallpaper.value = id
+            // TODO Update the actual store as well.
         }
     }
 
     companion object {
         private val CURRENTLY_SET_WALLPAPER_KEY = "wallpaper_key"
+        private val SHARED_PREFERNCE_FILE = "shared_preference"
     }
 }

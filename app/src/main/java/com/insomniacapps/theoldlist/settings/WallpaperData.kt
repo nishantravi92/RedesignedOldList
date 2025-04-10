@@ -12,7 +12,7 @@ object WallpaperData {
 
     val wallpaperIdAndResList: List<Pair<Int, Int>> get() = idToResMap.toList()
 
-    val defaultWallpaperId get() = 3
+    val defaultWallpaperResId get() = R.drawable.mountain
 
     fun getWallPaperDrawableResId(wallpaperId: Int): Int = idToResMap[wallpaperId]!!
 }
