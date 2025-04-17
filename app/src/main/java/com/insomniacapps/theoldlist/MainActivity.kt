@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.insomniacapps.theoldlist.settings.ui.WallpaperSettingsUi
-import com.insomniacapps.theoldlist.ui.HomeScreen
+import com.insomniacapps.theoldlist.ui.TasksScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") {
-                    HomeScreen(navController)
+                    TasksScreen(navController)
                 }
                 composable("settings") {
                     WallpaperSettingsUi(navController = navController)

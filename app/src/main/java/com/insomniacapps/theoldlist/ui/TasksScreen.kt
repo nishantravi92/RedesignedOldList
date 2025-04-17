@@ -15,17 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.insomniacapps.theoldlist.data.TaskUiData
 import com.insomniacapps.theoldlist.data.TaskUiModelAction
 import com.insomniacapps.theoldlist.ui.theme.TheOldListTheme
-import com.insomniacapps.theoldlist.viewmodel.HomeViewModel
+import com.insomniacapps.theoldlist.viewmodel.TasksViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hiltViewModel()) {
-    TheOldListTheme(homeViewModel.wallpaperResState) {
+fun TasksScreen(navController: NavController, tasksViewModel: TasksViewModel = hiltViewModel()) {
+    TheOldListTheme(tasksViewModel.wallpaperResState) {
         Scaffold(modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
             topBar = { TopAppBar(title = { Text("The Old list") },
