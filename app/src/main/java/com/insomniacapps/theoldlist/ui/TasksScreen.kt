@@ -1,6 +1,7 @@
 package com.insomniacapps.theoldlist.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -29,31 +30,35 @@ fun TasksScreen(navController: NavController, tasksViewModel: TasksViewModel = h
             containerColor = Color.Transparent,
             topBar = { TopAppBar(title = { Text("The Old list") },
                 actions = { IconActions(navController) }) }) { innerPadding ->
-            TaskUi(
-                taskUiData = TaskUiData(
-                    title = "My task",
-                    dueDate = "10/23/2025",
-                    isStarred = true,
-                    taskUiModelAction = object : TaskUiModelAction {
-                        override fun onChecked() {
-                            TODO("Not yet implemented")
-                        }
+            Column {
+                AddTaskUi(Modifier.padding(innerPadding), onAddTaskButtonClick = { })
+                TaskUi(
+                    taskUiData = TaskUiData(
+                        title = "My task",
+                        dueDate = "10/23/2025",
+                        isStarred = true,
+                        taskUiModelAction = object : TaskUiModelAction {
+                            override fun onChecked() {
+                                TODO("Not yet implemented")
+                            }
 
-                        override fun onStarClicked(isStarred: Boolean) {
-                            TODO("Not yet implemented")
-                        }
+                            override fun onStarClicked(isStarred: Boolean) {
+                                TODO("Not yet implemented")
+                            }
 
-                        override fun onLongClicked() {
-                            TODO("Not yet implemented")
-                        }
-                    }),
-                modifier = Modifier.padding(innerPadding)
-            )
+                            override fun onLongClicked() {
+                                TODO("Not yet implemented")
+                            }
+                        }),
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun IconActions(navController: NavController) {
-    Icon(imageVector = Icons.Rounded.Settings, contentDescription = "Settings", modifier = Modifier.padding(end = 16.dp).clickable { navController.navigate(route = "settings") })
+    Icon(imageVector = Icons.Rounded.Settings, contentDescription = "Settings", modifier = Modifier
+        .padding(end = 16.dp)
+        .clickable { navController.navigate(route = "settings") })
 }

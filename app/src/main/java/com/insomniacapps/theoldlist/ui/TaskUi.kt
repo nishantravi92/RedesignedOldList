@@ -33,7 +33,7 @@ import com.insomniacapps.theoldlist.data.TaskUiData
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TaskUi(taskUiData: TaskUiData, modifier: Modifier) {
+fun TaskUi(taskUiData: TaskUiData, modifier: Modifier = Modifier) {
     val isChecked by remember { mutableStateOf(false) }
         Row(
             modifier = modifier
@@ -47,7 +47,7 @@ fun TaskUi(taskUiData: TaskUiData, modifier: Modifier) {
                 )
                 .combinedClickable(onLongClick = { taskUiData.taskUiModelAction.onLongClicked() }) { }
         ) {
-            Spacer(modifier = modifier.width(width = 8.dp))
+            Spacer(modifier = Modifier.width(width = 8.dp))
             Checkbox(
                 checked = isChecked,
                 colors = CheckboxDefaults.colors(uncheckedColor = MaterialTheme.colorScheme.onPrimary),
