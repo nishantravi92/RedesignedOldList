@@ -4,15 +4,18 @@ import androidx.compose.runtime.Immutable
 
 
 interface TaskUiModelAction {
-    fun onChecked()
+    fun onChecked(taskId: String)
 
-    fun onStarClicked(isStarred: Boolean)
+    fun onStarClicked(isStarred: Boolean, taskId: String)
 
-    fun onLongClicked()
+    fun onLongClicked(taskId: String)
 }
 
 @Immutable
-class TaskUiData(val title: String,
-                 val dueDate: String? = null,
-                 val isStarred: Boolean,
-                 val taskUiModelAction: TaskUiModelAction)
+class TaskUiData(
+    val id: String,
+    val title: String,
+    val dueDate: String? = null,
+    val isStarred: Boolean,
+    val taskUiModelAction: TaskUiModelAction
+)

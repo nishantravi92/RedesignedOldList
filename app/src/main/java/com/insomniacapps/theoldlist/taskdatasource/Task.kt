@@ -46,8 +46,14 @@ interface TasksDao {
     suspend fun addTask(task: Task)
 
     @Query("select * from task where id = :id")
-    fun getTask(id: String): Task
+    suspend fun getTask(id: String): Task
 
     @Delete
     suspend fun deleteTask(task: Task)
+
+    @Query("DELETE FROM task WHERE id = :id")
+    suspend fun deleteTask(id: String)
+
+    @Query("UPDATE task SET starred=:isStarred WHERE id=:taskId")
+    suspend fun starTask(taskId: String, isStarred: Boolean)
 }

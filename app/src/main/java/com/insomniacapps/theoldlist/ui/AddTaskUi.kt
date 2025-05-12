@@ -30,7 +30,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun AddTaskUi(modifier: Modifier = Modifier, onAddTaskButtonClick: (String) -> Unit) {
     Row(
