@@ -11,15 +11,21 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import java.util.Calendar
 import java.util.Date
+import java.util.UUID
+import kotlin.uuid.Uuid
 
 @Entity
 data class Task(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String? = null,
     @ColumnInfo(name = "due_date") val dueDate: Date? = null,
     @ColumnInfo(name = "starred") val starred: Boolean = false,
-)
+) {
+    companion object {
+        fun generateUuid():String = UUID.randomUUID().toString()
+    }
+}
 
 @Dao
 interface TasksDao {

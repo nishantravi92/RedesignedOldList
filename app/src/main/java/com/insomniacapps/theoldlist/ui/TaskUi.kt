@@ -5,7 +5,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -45,11 +44,8 @@ fun TaskUi(taskUiData: TaskUiData, modifier: Modifier = Modifier) {
             .padding(vertical = 1.dp, horizontal = 16.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Max)
-            .roundedShape()
-            .background(
-                shape = RoundedCornerShape(4.dp),
-                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
-            )
+            .clipRoundedShape(size = 6.dp)
+            .background(color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f))
             .combinedClickable(onLongClick = { taskUiData.taskUiModelAction.onLongClicked(taskId = taskUiData.id) }) { }
     ) {
         Spacer(modifier = Modifier.width(width = 8.dp))
@@ -57,7 +53,7 @@ fun TaskUi(taskUiData: TaskUiData, modifier: Modifier = Modifier) {
             checked = isChecked,
             colors = CheckboxDefaults.colors(uncheckedColor = MaterialTheme.colorScheme.onPrimary),
             onCheckedChange = {
-                taskUiData.taskUiModelAction.onChecked()
+                taskUiData.taskUiModelAction.onChecked(taskUiData.id)
             })
         Column(
             modifier = Modifier
@@ -97,7 +93,7 @@ fun TaskUi(taskUiData: TaskUiData, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .width(24.dp)
                     .clickable {
-                        taskUiData.taskUiModelAction.onStarClicked(!taskUiData.isStarred)
+                        taskUiData.taskUiModelAction.onStarClicked(!taskUiData.isStarred, taskUiData.id)
                     }
             )
         }

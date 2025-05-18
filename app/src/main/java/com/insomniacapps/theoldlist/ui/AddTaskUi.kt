@@ -42,7 +42,7 @@ fun AddTaskUi(modifier: Modifier = Modifier, onAddTaskButtonClick: (String) -> U
         val focusManager = LocalFocusManager.current
         TextField(
             value = addTaskText,
-            shape = RoundedCornerShape(4.dp),
+            shape = RoundedCornerShape(6.dp),
             label = { Text(text = "Add task") },
             textStyle = MaterialTheme.typography.labelMedium,
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),

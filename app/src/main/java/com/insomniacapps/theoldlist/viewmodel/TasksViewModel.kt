@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,6 +39,7 @@ class TasksViewModel @Inject constructor(
         override fun onLongClicked(taskId: String) {
         }
     }
+
     val tasks: Flow<PagingData<TaskUiData>>
         get() = tasksRepo.getPagedTasks(viewModelScope)
             .map { pagingData: PagingData<Task> ->
@@ -45,11 +47,17 @@ class TasksViewModel @Inject constructor(
                     TaskUiData(
                         id = task.id,
                         title = task.title,
-                        dueDate = task.dueDate.toString(),
+                        dueDate = if (task.dueDate != null) task.dueDate.toString() else null,
                         isStarred = task.starred,
                         taskUiModelAction =taskModelUiAction)
                 }
             }
+
+    fun addTask(title: String) {
+        viewModelScope.launch {
+            tasksRepo.addTask(title, viewModelScope)
+        }
+    }
 
     companion object {
         val TEST_DATA = TaskUiData(

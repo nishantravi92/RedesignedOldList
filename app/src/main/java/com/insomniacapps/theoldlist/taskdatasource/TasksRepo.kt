@@ -32,9 +32,9 @@ class TasksRepo @Inject constructor(private val tasksDao: TasksDao) {
         }
     }
 
-    fun addTask(task: Task, scope: CoroutineScope) {
+    fun addTask(title: String, scope: CoroutineScope) {
         scope.launch {
-            tasksDao.addTask(task)
+            tasksDao.addTask(Task(title = title))
         }
     }
 
